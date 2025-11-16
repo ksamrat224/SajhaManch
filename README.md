@@ -10,9 +10,9 @@ A full-stack web application that allows users to vote and give feedback on vari
 - ✅ User Registration & Login
 - ✅ Secure Voting Mechanism
 - ✅ Feedback Submission
-- 📊 Admin Dashboard (coming soon)
+- 📊 Admin Dashboard 
 - 📩 Email Notifications (planned)
-- 📱 Responsive Design (frontend in progress)
+- 📱 Responsive Design 
 
 ---
 
@@ -22,7 +22,7 @@ A full-stack web application that allows users to vote and give feedback on vari
 - [NestJS](https://nestjs.com/)
 - TypeScript
 - REST API
-- MongoDB / PostgreSQL (whichever you're using)
+- PostgreSQL
 
 ### Frontend (Planned)
 - React (or Next.js)
