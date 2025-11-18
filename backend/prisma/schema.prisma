@@ -23,51 +23,80 @@ model User{
   name String
   mobile String @unique
   email String @unique
-  password String
+  password String //hashing will be done through bcrypt before saving to db
   role Role @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+
   votes Vote[]
   feedbacks Feedback[]
 
   @@map("users")
 }
+
+
 model Poll{
   id Int @id @default(autoincrement())
   title String @unique
-  description String
-  options PollOption[]
+  description String?
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   isActive Boolean @default(true)
+  endsAt DateTime?
+
+
+  options PollOption[]
+  votes       Vote[]
+  feedbacks   Feedback[]      
 
   @@map("polls")
+  @@index([isActive])
+  @@index([createdAt])
 }
+
+
 model PollOption{
   id Int @id @default(autoincrement())
-  name String  @unique
-  poll Poll @relation(fields: [pollId],references: [id])
+  name String  
+  poll Poll @relation(fields: [pollId],references: [id],onDelete: Cascade)
   pollId Int
+
+
   votes Vote[]
 
   @@map("poll_options")
-  @@unique([name, pollId])
+  @@unique([name, pollId]) //candidate name unique within the same poll
+  @@index([pollId])
 }
-model Vote{
-  id Int                @id @default(autoincrement())
-  user User             @relation(fields: [userId],references: [id])
-  userId Int
-  pollOption PollOption @relation(fields: [pollOptionId],references: [id])
+model Vote {
+  id           Int         @id @default(autoincrement())
+  user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       Int
+  poll         Poll        @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  pollId       Int
+  pollOption   PollOption  @relation(fields: [pollOptionId], references: [id], onDelete: Cascade)
   pollOptionId Int
-  votedAt DateTime      @default(now())
+  votedAt      DateTime    @default(now())
 
   @@map("votes")
-  @@unique([userId, pollOptionId])
+  @@unique([userId, pollId])
+  @@index([pollId])
+  @@index([pollOptionId])
+  @@index([userId])
 }
+
 model Feedback {
-  id Int @id @default(autoincrement())
-  message String
-  user User? @relation(fields: [userId],references: [id])
-  userId Int?
-  createdAt DateTime @default(now())
+  id          Int       @id @default(autoincrement())
+  message     String    
+  user        User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId      Int?
+  poll        Poll      @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  pollId      Int
+
+  createdAt   DateTime  @default(now())
 
   @@map("feedbacks")
+  @@index([pollId])
+  @@index([createdAt])
 }
-
