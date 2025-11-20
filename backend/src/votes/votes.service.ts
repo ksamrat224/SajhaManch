@@ -8,8 +8,7 @@ export class VotesService {
   constructor(private readonly prisma: PrismaClient) {}
 
   async create(createVoteDto: CreateVoteDto) {
-    //hardcoded user ,temporary
-    createVoteDto.userId = 1;
+    
     return this.prisma.vote.create({
       data: createVoteDto,
     });
