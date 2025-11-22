@@ -17,7 +17,7 @@ export class PollsService {
         data: createPollDto,
       });
     } catch (error) {
-      if (error.code === 'P2002' && error.meta?.target?.includes('title')) {
+      if (error.code === 'P2002') {
         throw new BadRequestException(
           'Poll with the given title already exists',
         );

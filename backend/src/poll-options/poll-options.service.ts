@@ -8,9 +8,18 @@ export class PollOptionsService {
   constructor(private readonly prisma: PrismaClient) {}
 
   async create(createPollOptionDto: CreatePollOptionDto) {
-    return this.prisma.pollOption.create({
-      data:createPollOptionDto,
-    });
+    try {
+      return await this.prisma.pollOption.create({
+        data: createPollOptionDto,
+      });
+    } catch (error) {
+      if (error.code === 'P2002') {
+        throw new NotFoundException(
+          'Poll option with the given name already exists for this poll',
+        );
+      }
+      throw error;
+    }
   }
 
   async findAll() {
@@ -19,9 +28,9 @@ export class PollOptionsService {
 
   async findOne(id: number) {
     const pollOption = await this.prisma.pollOption.findUnique({
-      where:{id},
+      where: { id },
     });
-    if(!pollOption) {
+    if (!pollOption) {
       throw new NotFoundException('pollOption not found');
     }
     return pollOption;
@@ -30,15 +39,15 @@ export class PollOptionsService {
   async update(id: number, updatePollOptionDto: UpdatePollOptionDto) {
     await this.findOne(id);
     return this.prisma.pollOption.update({
-      where:{id},
-      data:updatePollOptionDto
+      where: { id },
+      data: updatePollOptionDto,
     });
   }
 
- async remove(id: number) {
-  await this.findOne(id);
+  async remove(id: number) {
+    await this.findOne(id);
     return this.prisma.pollOption.delete({
-      where:{id},
+      where: { id },
     });
   }
 }
