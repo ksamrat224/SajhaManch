@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreatePollDto } from './dto/create-poll.dto';
 import { UpdatePollDto } from './dto/update-poll.dto';
 import { PrismaClient } from 'generated/prisma';
@@ -6,10 +10,20 @@ import { PrismaClient } from 'generated/prisma';
 @Injectable()
 export class PollsService {
   constructor(private readonly prisma: PrismaClient) {}
+
   async create(createPollDto: CreatePollDto) {
-    return this.prisma.poll.create({
-      data: createPollDto,
-    });
+    try {
+      return await this.prisma.poll.create({
+        data: createPollDto,
+      });
+    } catch (error) {
+      if (error.code === 'P2002' && error.meta?.target?.includes('title')) {
+        throw new BadRequestException(
+          'Poll with the given title already exists',
+        );
+      }
+      throw error;
+    }
   }
 
   async findAll() {
