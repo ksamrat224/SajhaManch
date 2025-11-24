@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -77,5 +78,71 @@ export class VotesService {
     return this.prisma.vote.delete({
       where: { id, userId },
     });
+  }
+
+  async hasUserVoted(userId: number, pollId: number): Promise<boolean> {
+    const vote = await this.prisma.vote.findUnique({
+      where: {
+        userId_pollId: {
+          userId,
+          pollId,
+        },
+      },
+    });
+    return !!vote;
+  }
+
+  async getPollResults(pollId: number,userId:number) {
+
+    const hasVoted = await this.hasUserVoted(userId,pollId);
+    if(!hasVoted) {
+      throw new ForbiddenException('you must vote before viewing results');
+    }
+    const poll = await this.prisma.poll.findUnique({
+      where: { id: pollId },
+      include: {
+        options: true,
+      },
+    });
+    if (!poll) {
+      throw new NotFoundException('poll not found');
+    }
+    const voteCounts = await this.prisma.vote.groupBy({
+      by: ['pollOptionId'],
+      where: { pollId },
+      _count: { id: true },
+    });
+    const totalVotes = voteCounts.reduce((sum, v) => sum + v._count.id, 0);
+
+    const results = poll.options.map((option) => {
+      const voteCount =
+        voteCounts.find((v) => v.pollOptionId === option.id)?._count.id || 0;
+      const percentage = totalVotes > 0 ? (voteCount / totalVotes) * 100 : 0;
+      return {
+        optionId: option.id,
+        optionName: option.name,
+        voteCount,
+        percentage: parseFloat(percentage.toFixed(2)),
+      };
+    });
+    const maxVotes = Math.max(...results.map((r) => r.voteCount));
+    const winners = results.filter(
+      (r) => r.voteCount === maxVotes && maxVotes > 0,
+    );
+
+    return {
+      pollId: poll.id,
+      title: poll.title,
+      description: poll.description,
+      totalVotes,
+      isActive: poll.isActive,
+      results,
+      winners: winners.map((w) => ({
+        optionId: w.optionId,
+        optionName: w.optionName,
+        voteCount: w.voteCount,
+        percentage: w.percentage,
+      })),
+    };
   }
 }

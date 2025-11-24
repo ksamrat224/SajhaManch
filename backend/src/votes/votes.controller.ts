@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Req,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { VotesService } from './votes.service';
 import { CreateVoteDto } from './dto/create-vote.dto';
@@ -47,4 +48,22 @@ export class VotesController {
   remove(@Param('id') id: string, @Req() req: Payload) {
     return this.votesService.remove(+id, req.payload.id);
   }
+
+  @Get('poll/:pollId/results')
+  getPollResults(@Param('pollId', ParseIntPipe) pollId: number,@Req() req:Payload) {
+    return this.votesService.getPollResults(pollId,req.payload.id);
+  }
+
+  @Get('poll/:pollId/check')
+  async checkIfVoted(
+    @Param('pollId', ParseIntPipe) pollId: number,
+    @Req() req: Payload,
+  ) {
+    const hasVoted = await this.votesService.hasUserVoted(
+      req.payload.id,
+      pollId,
+    );
+    return { hasVoted };
+  }
+  //aaba work on vote end huda result show garrne 
 }
