@@ -43,7 +43,7 @@ model Poll{
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   isActive Boolean @default(true)
-  endsAt DateTime?
+  endsAt DateTime
 
 
   options PollOption[]

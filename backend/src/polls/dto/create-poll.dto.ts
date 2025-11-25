@@ -16,6 +16,6 @@ export class CreatePollDto {
   isActive: boolean;
 
   @IsDateString()
-  @IsOptional()
-  endsAt?: Date;
+  @IsNotEmpty()
+  endsAt: Date;
 }
