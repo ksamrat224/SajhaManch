@@ -1,3 +1,4 @@
+//npx ts-node prisma/seed.ts
 import { PrismaClient, Role } from '../generated/prisma';
 const prisma = new PrismaClient();
 
@@ -8,7 +9,7 @@ async function main() {
       name: 'Alice',
       mobile: '9800000001',
       email: 'alice@example.com',
-      password: 'password', // replace after hashing in real code
+      password: 'password', 
       role: Role.USER,
     },
   });
@@ -18,7 +19,7 @@ async function main() {
       name: 'Bob',
       mobile: '9800000002',
       email: 'bob@example.com',
-      password: 'password', // replace after hashing in real code
+      password: 'password', 
       role: Role.ADMIN,
     },
   });
@@ -29,7 +30,7 @@ async function main() {
       title: 'Best Programming Language',
       description: 'Vote for your favorite language.',
       isActive: true,
-      endsAt: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // ends in 3 days
+      endsAt: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), 
       options: {
         create: [{ name: 'Python' }, { name: 'JavaScript' }, { name: 'Go' }],
       },
@@ -42,7 +43,7 @@ async function main() {
       title: 'Preferred Frontend Framework',
       description: 'Choose your go-to frontend framework.',
       isActive: true,
-      endsAt: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // ends in 2 days
+      endsAt: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), 
       options: {
         create: [{ name: 'React' }, { name: 'Vue' }, { name: 'Angular' }],
       },
@@ -55,7 +56,7 @@ async function main() {
     data: {
       userId: alice.id,
       pollId: poll1.id,
-      pollOptionId: poll1.options[0].id, // Python
+      pollOptionId: poll1.options[0].id, 
     },
   });
 
@@ -63,7 +64,7 @@ async function main() {
     data: {
       userId: bob.id,
       pollId: poll1.id,
-      pollOptionId: poll1.options[1].id, // JavaScript
+      pollOptionId: poll1.options[1].id, 
     },
   });
 
@@ -71,7 +72,7 @@ async function main() {
     data: {
       userId: bob.id,
       pollId: poll2.id,
-      pollOptionId: poll2.options[0].id, // React
+      pollOptionId: poll2.options[0].id, 
     },
   });
 

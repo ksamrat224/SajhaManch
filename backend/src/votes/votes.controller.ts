@@ -65,5 +65,5 @@ export class VotesController {
     );
     return { hasVoted };
   }
-  //aaba work on vote end huda result show garrne 
+  
 }
