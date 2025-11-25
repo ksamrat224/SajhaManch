@@ -28,7 +28,9 @@ export class VotesService {
     }
     const currentDate = new Date();
     if (!poll.isActive || poll.endsAt < currentDate) {
-      throw new BadRequestException('Poll is not active or must have been ended');
+      throw new BadRequestException(
+        'Poll is not active or must have been ended',
+      );
     }
 
     const existing = await this.prisma.vote.findUnique({
@@ -93,12 +95,7 @@ export class VotesService {
     return !!vote;
   }
 
-  async getPollResults(pollId: number,userId:number) {
-
-    const hasVoted = await this.hasUserVoted(userId,pollId);
-    if(!hasVoted) {
-      throw new ForbiddenException('you must vote before viewing results');
-    }
+  async getPollResults(pollId: number, userId: number) {
     const poll = await this.prisma.poll.findUnique({
       where: { id: pollId },
       include: {
@@ -107,6 +104,15 @@ export class VotesService {
     });
     if (!poll) {
       throw new NotFoundException('poll not found');
+    }
+    const now = new Date();
+
+    if (poll.endsAt < now) {
+    } else {
+      const hasVoted = await this.hasUserVoted(userId, pollId);
+      if (!hasVoted) {
+        throw new ForbiddenException('You must vote before viewing results');
+      }
     }
     const voteCounts = await this.prisma.vote.groupBy({
       by: ['pollOptionId'],
