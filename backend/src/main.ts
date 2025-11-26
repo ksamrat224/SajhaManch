@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { AuthGuard } from './guards/auth/auth.guard';
 import { JwtService } from '@nestjs/jwt';
+import { RolesGuard } from './guards/roles.guard';
 
 async function bootstrap() {
   //application instance is created here
@@ -18,7 +19,10 @@ async function bootstrap() {
   );
 
   //Middleware for guard and authentication
-  app.useGlobalGuards(new AuthGuard(new JwtService(),new Reflector()));
+  app.useGlobalGuards(
+    new AuthGuard(new JwtService(),new Reflector()),
+    new RolesGuard(new Reflector()),
+  );
 
   //application starts here
   await app.listen(process.env.PORT ?? 3000);
