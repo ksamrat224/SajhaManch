@@ -6,6 +6,7 @@ import {
 import { CreatePollDto } from './dto/create-poll.dto';
 import { UpdatePollDto } from './dto/update-poll.dto';
 import { PrismaService } from '../../prisma/prisma.service';
+import { QueryPollDto } from './dto/query-poll.dto';
 
 @Injectable()
 export class PollsService {
@@ -26,8 +27,48 @@ export class PollsService {
     }
   }
 
-  async findAll() {
-    return this.prisma.poll.findMany();
+  async findAll(queryDto: QueryPollDto) {
+    const {
+      page = 1,
+      limit = 10,
+      search,
+      isActive,
+      sortBy = 'createdAt',
+      order = 'desc',
+    } = queryDto;
+
+    const skip = (page - 1) * limit;
+
+    const where: any = {};
+    if (search) {
+      where.OR = [
+        { title: { contains: search, mode: 'insensitive' } },
+        { description: { contains: search, mode: 'insensitive' } },
+      ];
+    }
+    if (isActive !== undefined) {
+      where.isActive = isActive;
+    }
+
+    const [polls, total] = await Promise.all([
+      this.prisma.poll.findMany({
+        where,
+        skip,
+        take: limit,
+        orderBy: { [sortBy]: order },
+        include: { options: true, _count: { select: { votes: true } } },
+      }),
+      this.prisma.poll.count({ where }),
+    ]);
+    return {
+      data: polls,
+      meta: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
   }
 
   async findOne(id: number) {

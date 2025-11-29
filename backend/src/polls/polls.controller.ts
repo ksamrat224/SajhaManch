@@ -1,8 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { PollsService } from './polls.service';
 import { CreatePollDto } from './dto/create-poll.dto';
 import { UpdatePollDto } from './dto/update-poll.dto';
 import { Roles } from 'src/helpers/roles';
+import { QueryPollDto } from './dto/query-poll.dto';
+import { Public } from 'src/helpers/public';
 
 @Controller('polls')
 export class PollsController {
@@ -12,12 +14,13 @@ export class PollsController {
   create(@Body() createPollDto: CreatePollDto) {
     return this.pollsService.create(createPollDto);
   }
-  @Roles('ADMIN','USER')
+  @Roles('ADMIN', 'USER')
   @Get()
-  findAll() {
-    return this.pollsService.findAll();
+  @UsePipes(new ValidationPipe({ transform: true }))
+  async findAll(@Query() query: QueryPollDto) {
+    return this.pollsService.findAll(query);
   }
-  @Roles('ADMIN','USER')
+  @Roles('ADMIN', 'USER')
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.pollsService.findOne(+id);
