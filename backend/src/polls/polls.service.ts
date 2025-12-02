@@ -7,6 +7,7 @@ import { CreatePollDto } from './dto/create-poll.dto';
 import { UpdatePollDto } from './dto/update-poll.dto';
 import { PrismaService } from '../../prisma/prisma.service';
 import { QueryPollDto } from './dto/query-poll.dto';
+import { fuzzySearch } from 'src/common/utils/fuzzy-search.utils';
 
 @Injectable()
 export class PollsService {
@@ -37,31 +38,33 @@ export class PollsService {
       order = 'desc',
     } = queryDto;
 
-    const skip = (page - 1) * limit;
-
     const where: any = {};
-    if (search) {
-      where.OR = [
-        { title: { contains: search, mode: 'insensitive' } },
-        { description: { contains: search, mode: 'insensitive' } },
-      ];
-    }
     if (isActive !== undefined) {
       where.isActive = isActive;
     }
 
-    const [polls, total] = await Promise.all([
-      this.prisma.poll.findMany({
-        where,
-        skip,
-        take: limit,
-        orderBy: { [sortBy]: order },
-        include: { options: true, _count: { select: { votes: true } } },
-      }),
-      this.prisma.poll.count({ where }),
-    ]);
+    let polls = await this.prisma.poll.findMany({
+      where,
+      orderBy: { [sortBy]: order },
+      include: { options: true, _count: { select: { votes: true } } },
+    });
+
+    if (search) {
+      const fuzzyResults = fuzzySearch(
+        search,
+        polls,
+        (poll) => `${poll.title} ${poll.description || ''}`,
+        3,
+      );
+      polls = fuzzyResults.map((result) => result.item);
+    }
+
+    const total = polls.length;
+    const skip = (page - 1) * limit;
+    const paginatedPolls = polls.slice(skip, skip + limit);
+
     return {
-      data: polls,
+      data: paginatedPolls,
       meta: {
         total,
         page,
