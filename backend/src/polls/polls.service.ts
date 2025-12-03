@@ -8,10 +8,12 @@ import { UpdatePollDto } from './dto/update-poll.dto';
 import { PrismaService } from '../../prisma/prisma.service';
 import { QueryPollDto } from './dto/query-poll.dto';
 import { fuzzySearch } from 'src/common/utils/fuzzy-search.utils';
+import { Trie } from 'src/common/utils/trie.utils';
 
 @Injectable()
 export class PollsService {
   constructor(private readonly prisma: PrismaService) {}
+  private pollTrie: Trie = new Trie();
 
   async create(createPollDto: CreatePollDto) {
     try {
@@ -72,6 +74,15 @@ export class PollsService {
         totalPages: Math.ceil(total / limit),
       },
     };
+  }
+
+  async buildSearchIndex() {
+    const polls = await this.prisma.poll.findMany();
+    polls.forEach((poll) => this.pollTrie.insert(poll.title, poll));
+  }
+
+  async autocomplete(prefix: string) {
+    return this.pollTrie.search(prefix, 5);
   }
 
   async findOne(id: number) {
