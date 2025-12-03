@@ -116,6 +116,20 @@ export class PollsService implements OnModuleInit {
     return updatedPoll;
   }
 
+  async getTopPolls(limit = 5) {
+    return await this.prisma.poll.findMany({
+      where: { isActive: true }, 
+      include: {
+        options: true,
+        _count: { select: { votes: true } }, 
+      },
+      orderBy: {
+        votes: { _count: 'desc' }, 
+      },
+      take: limit, 
+    });
+  }
+
   async remove(id: number) {
     const poll = await this.findOne(id);
     this.pollTrie.remove(poll.title);

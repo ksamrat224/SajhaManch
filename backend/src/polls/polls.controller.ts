@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { PollsService } from './polls.service';
 import { CreatePollDto } from './dto/create-poll.dto';
 import { UpdatePollDto } from './dto/update-poll.dto';
@@ -30,6 +41,12 @@ export class PollsController {
   update(@Param('id') id: string, @Body() updatePollDto: UpdatePollDto) {
     return this.pollsService.update(+id, updatePollDto);
   }
+  @Roles('ADMIN', 'USER')
+  @Get('top')
+  async getTop(@Query('limit') limit: number = 5) {
+    return await this.pollsService.getTopPolls(limit);
+  }
+
   @Roles('ADMIN')
   @Delete(':id')
   remove(@Param('id') id: string) {
