@@ -9,6 +9,8 @@ import {
   Query,
   UsePipes,
   ValidationPipe,
+  DefaultValuePipe,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { PollsService } from './polls.service';
 import { CreatePollDto } from './dto/create-poll.dto';
@@ -44,6 +46,14 @@ export class PollsController {
   @Get('top')
   async getTop(@Query('limit') limit: number = 5) {
     return await this.pollsService.getTopPolls(limit);
+  }
+
+  @Roles('ADMIN', 'USER')
+  @Get('trending')
+  async getTrending(
+    @Query('limit', new DefaultValuePipe(5), ParseIntPipe) limit: number,
+  ) {
+    return this.pollsService.getTrendingPolls(limit);
   }
 
   @Roles('ADMIN')

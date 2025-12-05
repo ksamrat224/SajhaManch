@@ -14,7 +14,7 @@ import { Trie } from 'src/common/utils/trie.utils';
 @Injectable()
 export class PollsService implements OnModuleInit {
   constructor(private readonly prisma: PrismaService) {}
-  
+
   private pollTrie: Trie = new Trie();
   async onModuleInit() {
     await this.initializeTrie();
@@ -119,15 +119,44 @@ export class PollsService implements OnModuleInit {
 
   async getTopPolls(limit = 5) {
     return await this.prisma.poll.findMany({
-      where: { isActive: true }, 
+      where: { isActive: true },
       include: {
         options: true,
-        _count: { select: { votes: true } }, 
+        _count: { select: { votes: true } },
       },
       orderBy: {
-        votes: { _count: 'desc' }, 
+        votes: { _count: 'desc' },
       },
-      take: limit, 
+      take: limit,
+    });
+  }
+
+  async getTrendingPolls(limit = 5) {
+    const last24h = new Date(Date.now() - 24 * 60 * 60 * 1000);
+
+    return this.prisma.poll.findMany({
+      where: {
+        isActive: true,
+        votes: {
+          some: { votedAt: { gte: last24h } },
+        },
+      },
+      include: {
+        _count: {
+          select: {
+            votes: {
+              where: { votedAt: { gte: last24h } },
+            },
+          },
+        },
+        options: true,
+      },
+      orderBy: {
+        votes: {
+          _count: 'desc',
+        },
+      },
+      take: limit,
     });
   }
 
