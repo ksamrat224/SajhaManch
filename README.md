@@ -1,69 +1,96 @@
-# 🗳️ Voting and Feedback System
+🏛️ SajhaManch
 
-A full-stack web application that allows users to vote and give feedback on various topics. Built with a **NestJS** backend and (soon) a modern frontend framework like **React** or **Next.js**.
+SajhaManch is a digital public square for Nepal — a platform where people can express opinions, participate in public discussions, vote on issues, and collectively reach consensus in a decentralized and transparent way.
 
----
+Unlike traditional voting systems, SajhaManch focuses on dialogue + participation + shared decision-making.
 
-## 📁 Project Structure
-## 🚀 Features
+🌱 Vision
 
-- ✅ User Registration & Login
-- ✅ Secure Voting Mechanism
-- ✅ Feedback Submission
-- 📊 Admin Dashboard 
-- 📩 Email Notifications (planned)
-- 📱 Responsive Design 
+To create a modern civic-tech platform that empowers Nepalis to:
 
----
+discuss public issues openly,
 
-## 🛠️ Tech Stack
+share feedback without fear,
 
-### Backend
-- [NestJS](https://nestjs.com/)
-- TypeScript
-- REST API
-- PostgreSQL
+vote responsibly,
 
-### Frontend (Planned)
-- React (or Next.js)
-- Tailwind CSS
-- Axios
+and gradually form collective consensus through participation.
 
+🚀 Key Features
+🗳️ Public Voting
 
-## 🧩 Project Breakdown (MVP)
+Create and participate in issue-based polls
 
-### 👤 User Roles
+One vote per user per poll
 
-#### 1. Admin
-- Creates polls/voting topics
-- Views results and manages feedback
+Transparent and secure vote storage
 
-#### 2. User (General Public)
-- Views and votes in available polls
-- Submits feedback anonymously or with name
+💬 Feedback & Discussion
 
----
+Submit feedback anonymously or with identity
 
-## 🛠️ Core Features (Phase 1 - MVP)
+Encourage open public dialogue
 
-### ✅ Authentication
-- Signup/Login with email
-- (Future) Optional Citizen ID / Student ID-based login
-- Role-based access (admin, user)
+Admin moderation and responses
 
-### 🗳️ Voting System
-- Displays a list of active polls (title + description)
-- Users can vote **only once per poll**
-- Secure vote storage
+👥 User Roles
 
-### 💬 Feedback Module
-- Users can submit feedback (with or without identity)
-- Admin can view and optionally reply to feedback
+Public Users – vote, share feedback, and participate in discussions
 
-### 📊 Results View
-- Poll results shown via percentage bars or pie charts
-- Results visible:
-  - Only after poll closes (for users)
-  - Anytime for admins
+Admins – create polls, manage content, and view analytics
 
+📊 Results & Insights
 
+Visualized poll results (charts & percentages)
+
+Results visibility control (after poll ends / admin-only)
+
+🧩 MVP Scope (Phase 1)
+✅ Authentication
+
+Email-based signup & login
+
+Role-based access control (Admin / User)
+
+Secure session handling
+
+🗳️ Voting System
+
+Active polls with title & description
+
+Single-vote enforcement per user
+
+Server-side validation
+
+💬 Feedback Module
+
+Anonymous or identified feedback
+
+Admin dashboard for review & response
+
+🛠️ Tech Stack
+Backend (Current)
+
+NestJS
+
+TypeScript
+
+REST APIs
+
+PostgreSQL
+
+Frontend (Planned)
+
+React / Next.js
+
+Tailwind CSS
+
+Axios / Fetch API
+
+📁 Project Structure
+sajhamanch/
+├── backend/
+│   ├── src/
+│   ├── modules/
+│   └── main.ts
+└── frontend/ (planned)
