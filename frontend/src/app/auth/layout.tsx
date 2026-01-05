@@ -1,5 +1,10 @@
+import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Authentication | Voting & Feedback",
+};
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
@@ -16,5 +21,3 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
     </div>
   );
 }
-
-

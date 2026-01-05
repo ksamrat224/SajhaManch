@@ -1,8 +1,21 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { getCurrentUser } from "@/lib/auth";
 
-export default function AdminLayout({ children }: { children: ReactNode }) {
-  // TODO: Enforce ADMIN role in server components using /auth/profile
+export default async function AdminLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  const user = await getCurrentUser();
+  if (!user) {
+    redirect("/auth/login");
+  }
+  if (user.role !== "ADMIN") {
+    redirect("/user");
+  }
+
   return (
     <div className="flex min-h-screen flex-col bg-zinc-950 text-zinc-50">
       <header className="border-b border-zinc-800">
@@ -11,6 +24,9 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             Admin · Voting &amp; Feedback
           </Link>
           <nav className="flex items-center gap-4 text-sm text-zinc-300">
+            <span className="text-xs text-zinc-400">
+              {user.name || user.email}
+            </span>
             <Link href="/admin" className="hover:text-white">
               Dashboard
             </Link>
@@ -29,5 +45,4 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     </div>
   );
 }
-
 
