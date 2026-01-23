@@ -51,19 +51,10 @@ export default async function PollsPage({
   const pollsData = await getPolls(params);
 
   return (
-    <section className="mx-auto max-w-6xl px-4 py-8">
-      {/* Hero section */}
-      <div className="mb-10 text-center">
-        <h1 className="mb-3 text-4xl font-bold tracking-tight">
-          <span className="text-primary">Live</span> Polls
-        </h1>
-        <p className="mx-auto max-w-2xl text-muted-foreground">
-          Your voice matters. Vote on active polls, see real-time results, and
-          participate in shaping decisions that matter to the community.
-        </p>
+    <section className="min-h-screen bg-slate-900">
+      <div className="mx-auto max-w-7xl px-4 py-8">
+        <PollsClient initialData={pollsData} />
       </div>
-
-      <PollsClient initialData={pollsData} />
     </section>
   );
 }
