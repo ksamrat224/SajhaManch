@@ -1,5 +1,5 @@
 export const API_BASE_URL =
-  process.env.API_BASE_URL ?? "http://localhost:4000";
+  process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:3000";
 
 export async function backendFetch(
   path: string,
@@ -13,8 +13,7 @@ export async function backendFetch(
     headers: {
       ...(headers || {}),
       ...(authToken ? { Authorization: `Bearer ${authToken}` } : {}),
-      "Content-Type":
-        (headers as any)?.["Content-Type"] ?? "application/json",
+      "Content-Type": (headers as any)?.["Content-Type"] ?? "application/json",
     },
   });
 
@@ -32,5 +31,3 @@ export async function backendFetch(
 
   return (await res.text()) as unknown;
 }
-
-

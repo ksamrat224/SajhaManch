@@ -20,7 +20,8 @@ export class AuthService {
   ) {}
   async register(registerDto: RegisterDto) {
     const user = await this.usersService.create(registerDto);
-    const token = await this.jwtService.signAsync(user);
+    const { password, ...userWithoutPassword } = user;
+    const token = await this.jwtService.signAsync(userWithoutPassword);
     return { token };
   }
 
@@ -44,7 +45,8 @@ export class AuthService {
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid Credentials');
     }
-    const token = await this.jwtService.signAsync(user);
+    const { password, ...userWithoutPassword } = user;
+    const token = await this.jwtService.signAsync(userWithoutPassword);
     return { token };
   }
 

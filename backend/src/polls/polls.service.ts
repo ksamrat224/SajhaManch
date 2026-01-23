@@ -8,7 +8,7 @@ import { CreatePollDto } from './dto/create-poll.dto';
 import { UpdatePollDto } from './dto/update-poll.dto';
 import { PrismaService } from '../../prisma/prisma.service';
 import { Trie } from 'src/common/utils/trie.utils';
-import { Prisma } from 'generated/prisma/wasm';
+import { Prisma } from '@prisma/client';
 import { Query } from 'src/interfaces/query';
 
 @Injectable()
