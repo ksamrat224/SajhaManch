@@ -1,55 +1,73 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { Vote, LogIn, UserPlus, BarChart3 } from "lucide-react";
+import { Vote, LogIn, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function PublicLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground">
-      {/* Header with bright red background like janamat */}
-      <header className="sticky top-0 z-50 bg-primary shadow-md">
+    <div className="min-h-screen flex flex-col bg-background text-foreground animate-fade-in font-sans">
+      {/* Navbar: Clean White with Border */}
+      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-border/40">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+          {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/20 transition-colors group-hover:bg-white/30">
-              <Vote className="h-5 w-5 text-white" />
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-white transition-colors">
+              <Vote className="h-5 w-5" />
             </div>
-            <span className="text-lg font-bold text-white hidden sm:inline-block">
-              VoteSphere
+            <span className="text-xl font-bold text-primary tracking-tight font-heading">
+              SajhaManch
             </span>
           </Link>
 
-          <nav className="flex items-center gap-2">
-            <Link href="/polls">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="gap-2 text-white/90 hover:text-white hover:bg-white/10"
-              >
-                <BarChart3 className="h-4 w-4" />
-                <span className="hidden sm:inline">Polls</span>
-              </Button>
+          {/* Center Navigation */}
+          <nav className="hidden md:flex items-center gap-8">
+            <Link
+              href="/polls"
+              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+            >
+              Vote
             </Link>
-            <div className="mx-2 h-6 w-px bg-white/20 hidden sm:block" />
+            <Link
+              href="/results"
+              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+            >
+              Results
+            </Link>
+            <Link
+              href="/mission"
+              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+            >
+              Mission
+            </Link>
+            <Link
+              href="/how-it-works"
+              className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+            >
+              How It Works
+            </Link>
+          </nav>
+
+          {/* Auth Buttons */}
+          <div className="flex items-center gap-3">
             <Link href="/auth/login">
               <Button
                 variant="ghost"
                 size="sm"
-                className="gap-2 text-white/90 hover:text-white hover:bg-white/10"
+                className="font-medium text-muted-foreground hover:text-primary hover:bg-primary/5"
               >
-                <LogIn className="h-4 w-4" />
-                <span className="hidden sm:inline">Login</span>
+                Login
               </Button>
             </Link>
             <Link href="/auth/register">
               <Button
                 size="sm"
-                className="gap-2 bg-white text-primary hover:bg-white/90 font-semibold"
+                className="gap-2 bg-red-500 hover:from-red-600 hover:to-blue-700 text-white font-semibold shadow-md hover:shadow-lg transition-all border-0"
               >
-                <UserPlus className="h-4 w-4" />
-                <span className="hidden sm:inline">Register</span>
+                Join Now
+                <ArrowRight className="h-4 w-4" />
               </Button>
             </Link>
-          </nav>
+          </div>
         </div>
       </header>
 
@@ -57,30 +75,44 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
       <main className="flex-1">{children}</main>
 
       {/* Footer */}
-      <footer className="border-t border-border/50 bg-card/30">
+      <footer className="border-t border-border/40 bg-white">
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-          <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-2">
-              <Vote className="h-5 w-5 text-primary" />
-              <span className="font-semibold">VoteSphere</span>
+              <div className="p-1 rounded bg-primary/10">
+                <Vote className="h-4 w-4 text-primary" />
+              </div>
+              <span className="font-semibold text-foreground">SajhaManch</span>
             </div>
-            <p className="text-sm text-muted-foreground">
-              &copy; {new Date().getFullYear()} VoteSphere. All rights reserved.
-            </p>
-            <nav className="flex gap-4 text-sm text-muted-foreground">
+
+            <div className="text-sm text-muted-foreground">
+              Empowering voices through secure, transparent voting.
+            </div>
+
+            <div className="flex gap-6 text-sm">
               <Link
-                href="/polls"
-                className="hover:text-foreground transition-colors"
+                href="/privacy"
+                className="text-muted-foreground hover:text-primary"
               >
-                Browse Polls
+                Privacy
               </Link>
               <Link
-                href="/auth/login"
-                className="hover:text-foreground transition-colors"
+                href="/terms"
+                className="text-muted-foreground hover:text-primary"
               >
-                Sign In
+                Terms
               </Link>
-            </nav>
+              <Link
+                href="/contact"
+                className="text-muted-foreground hover:text-primary"
+              >
+                Contact
+              </Link>
+            </div>
+          </div>
+          <div className="mt-8 pt-8 border-t border-dashed border-border/40 text-center text-xs text-muted-foreground">
+            &copy; {new Date().getFullYear()} SajhaManch System. All rights
+            reserved.
           </div>
         </div>
       </footer>

@@ -1,135 +1,110 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/* Removed invalid @custom-variant and @theme blocks. All variables are now in :root and .dark. */
-
-/* Janamat-inspired vibrant theme - light background with colorful accents */
 :root {
-  --radius: 0.75rem;
-  /* Light neutral background */
-  --background: oklch(0.98 0.002 220);
-  --foreground: oklch(0.15 0.01 220);
-  /* Cards with white background */
+  --radius: 0.5rem; /* Clean, slightly rounded corners */
+  
+  /* Background: Light neutral gray #F3F4F6 */
+  --background: oklch(0.96 0.01 264);
+  /* Foreground: Dark gray text #1F2937 */
+  --foreground: oklch(0.25 0.03 264);
+  
+  /* Card: Pure White #FFFFFF */
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.15 0.01 220);
+  --card-foreground: oklch(0.25 0.03 264);
+  
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.15 0.01 220);
-  /* Bright red primary - Janamat style */
-  --primary: oklch(0.55 0.22 25);
+  --popover-foreground: oklch(0.25 0.03 264);
+  
+  /* Primary: Deep Blue #1E40AF */
+  --primary: oklch(0.44 0.20 264);
   --primary-foreground: oklch(1 0 0);
-  /* Blue/teal secondary */
-  --secondary: oklch(0.55 0.15 220);
+  
+  /* Secondary: Slate/Blue Gray #475569 */
+  --secondary: oklch(0.55 0.06 264);
   --secondary-foreground: oklch(1 0 0);
-  /* Muted gray tones */
-  --muted: oklch(0.95 0.005 220);
-  --muted-foreground: oklch(0.5 0.01 220);
-  /* Green accent */
-  --accent: oklch(0.55 0.15 145);
-  --accent-foreground: oklch(1 0 0);
-  /* Bright red destructive */
-  --destructive: oklch(0.55 0.22 25);
-  /* Light borders */
-  --border: oklch(0.9 0.005 220);
-  --input: oklch(0.98 0.002 220);
-  --ring: oklch(0.55 0.22 25);
-  /* Vibrant chart colors */
-  --chart-1: oklch(0.55 0.22 25);
-  --chart-2: oklch(0.55 0.15 145);
-  --chart-3: oklch(0.55 0.15 220);
-  --chart-4: oklch(0.65 0.18 45);
-  --chart-5: oklch(0.55 0.15 280);
+  
+  /* Muted: Lighter Gray #E5E7EB */
+  --muted: oklch(0.92 0.01 264);
+  --muted-foreground: oklch(0.55 0.04 264);
+  
+  /* Accent: Subtle Blue #EFF6FF */
+  --accent: oklch(0.97 0.02 264);
+  --accent-foreground: oklch(0.44 0.20 264);
+  
+  /* Destructive: Red #EF4444 */
+  --destructive: oklch(0.63 0.26 29);
+  --destructive-foreground: oklch(1 0 0);
+  
+  /* Border: Light Gray #E5E7EB */
+  --border: oklch(0.89 0.02 264);
+  --input: oklch(0.89 0.02 264);
+  /* Ring: Primary Blue */
+  --ring: oklch(0.44 0.20 264);
+  
+  /* Charts */
+  --chart-1: oklch(0.44 0.20 264); /* Primary Blue */
+  --chart-2: oklch(0.60 0.15 220); /* Cyan/Teal */
+  --chart-3: oklch(0.35 0.15 280); /* Purple */
+  --chart-4: oklch(0.70 0.15 140); /* Green */
+  --chart-5: oklch(0.63 0.26 29);  /* Red */
+  
   /* Sidebar */
   --sidebar: oklch(0.98 0.002 220);
   --sidebar-foreground: oklch(0.15 0.01 220);
-  --sidebar-primary: oklch(0.55 0.22 25);
+  --sidebar-primary: oklch(0.44 0.20 264);
   --sidebar-primary-foreground: oklch(1 0 0);
   --sidebar-accent: oklch(0.95 0.005 220);
   --sidebar-accent-foreground: oklch(0.15 0.01 220);
   --sidebar-border: oklch(0.9 0.005 220);
-  --sidebar-ring: oklch(0.55 0.22 25);
+  --sidebar-ring: oklch(0.44 0.20 264);
 }
 
 .dark {
-  --background: oklch(0.12 0.03 220);
-  --foreground: oklch(0.98 0.01 220);
-  --card: oklch(0.16 0.025 220);
-  --card-foreground: oklch(0.98 0.01 220);
-  --popover: oklch(0.16 0.025 220);
-  --popover-foreground: oklch(0.98 0.01 220);
-  --primary: oklch(0.72 0.18 45);
-  --primary-foreground: oklch(0.15 0 0);
-  --secondary: oklch(0.22 0.04 220);
-  --secondary-foreground: oklch(0.95 0.01 220);
-  --muted: oklch(0.2 0.03 220);
-  --muted-foreground: oklch(0.6 0.02 220);
-  --accent: oklch(0.55 0.15 280);
-  --accent-foreground: oklch(0.98 0 0);
-  --destructive: oklch(0.65 0.22 25);
-  --border: oklch(0.28 0.03 220);
-  --input: oklch(0.22 0.03 220);
-  --ring: oklch(0.72 0.18 45);
+  /* Dark Mode: Deep Navy Background */
+  --background: oklch(0.15 0.05 264);
+  --foreground: oklch(0.98 0.01 264);
+  
+  --card: oklch(0.18 0.05 264);
+  --card-foreground: oklch(0.98 0.01 264);
+  --popover: oklch(0.18 0.05 264);
+  --popover-foreground: oklch(0.98 0.01 264);
+  
+  --primary: oklch(0.55 0.20 264); /* Slightly lighter blue for dark mode */
+  --primary-foreground: oklch(1 0 0);
+  
+  --secondary: oklch(0.25 0.05 264);
+  --secondary-foreground: oklch(0.98 0.01 264);
+  
+  --muted: oklch(0.22 0.04 264);
+  --muted-foreground: oklch(0.70 0.04 264);
+  
+  --accent: oklch(0.25 0.05 264);
+  --accent-foreground: oklch(0.98 0.01 264);
+  
+  --destructive: oklch(0.40 0.20 29);
+  --border: oklch(0.25 0.05 264);
+  --input: oklch(0.25 0.05 264);
+  --ring: oklch(0.55 0.20 264);
 }
 
-/* Custom utility classes for Janamat style */
-.gradient-orange {
-  background: linear-gradient(135deg, oklch(0.7 0.18 45), oklch(0.65 0.2 30));
+/* Custom Gradients & Utilities */
+.bg-gradient-primary {
+  background: linear-gradient(135deg, oklch(0.44 0.20 264), oklch(0.35 0.18 264));
 }
 
-.gradient-teal {
-  background: linear-gradient(
-    135deg,
-    oklch(0.45 0.12 200),
-    oklch(0.35 0.1 220)
-  );
+.text-gradient {
+  background: linear-gradient(135deg, oklch(0.44 0.20 264), oklch(0.60 0.15 220));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
-.glass-card {
-  background: oklch(0.18 0.025 220 / 0.8);
-  backdrop-filter: blur(12px);
-  border: 1px solid oklch(0.3 0.03 220 / 0.5);
+body {
+  font-family: var(--font-inter), sans-serif;
 }
 
-.animate-pulse-slow {
-  animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-/* Poll option hover effects */
-.poll-option {
-  transition: all 0.2s ease;
-}
-
-.poll-option:hover {
-  transform: translateX(4px);
-  background: oklch(0.25 0.04 220);
-}
-
-/* Progress bar animation */
-.progress-animate {
-  transition: width 0.6s ease-out;
-}
-
-/* Vote button ripple effect */
-.vote-btn {
-  position: relative;
-  overflow: hidden;
-}
-
-.vote-btn::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle, oklch(1 0 0 / 0.3) 0%, transparent 60%);
-  transform: scale(0);
-  transition: transform 0.3s ease;
-}
-
-.vote-btn:active::after {
-  transform: scale(2);
-}
-
-@layer base {
-  body {
-    background-color: var(--background);
-    color: var(--foreground);
-  }
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-poppins), sans-serif;
+  letter-spacing: -0.02em;
 }

@@ -32,7 +32,7 @@ export default async function UserLayout({
               <Vote className="h-5 w-5 text-primary" />
             </div>
             <span className="text-lg font-bold gradient-text hidden sm:inline-block">
-              VoteSphere
+              SajhaManch
             </span>
           </Link>
 
@@ -120,7 +120,7 @@ export default async function UserLayout({
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <div className="flex items-center gap-2 text-muted-foreground">
               <Vote className="h-4 w-4" />
-              <span className="text-sm">VoteSphere</span>
+              <span className="text-sm">SajhaManch</span>
             </div>
             <p className="text-xs text-muted-foreground">
               &copy; {new Date().getFullYear()} All rights reserved.

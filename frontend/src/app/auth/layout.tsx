@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Vote } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Authentication | VoteSphere",
+  title: "Authentication | SajhaManch",
 };
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
@@ -18,7 +18,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 transition-colors group-hover:bg-primary/20">
           <Vote className="h-6 w-6 text-primary" />
         </div>
-        <span className="text-xl font-bold gradient-text">VoteSphere</span>
+        <span className="text-xl font-bold gradient-text">SajhaManch</span>
       </Link>
 
       <div className="relative w-full max-w-md">
@@ -26,7 +26,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
       </div>
 
       <p className="relative mt-8 text-sm text-muted-foreground">
-        &copy; {new Date().getFullYear()} VoteSphere. All rights reserved.
+        &copy; {new Date().getFullYear()} SajhaManch. All rights reserved.
       </p>
     </div>
   );

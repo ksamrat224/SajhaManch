@@ -41,82 +41,58 @@ export function PollCard({
 
   return (
     <Link href={`/polls/${poll.id}`}>
-      <div className="group relative overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/10">
-        {/* Colorful header with gradient */}
-        <div className="relative h-32 bg-gradient-to-br from-primary/90 via-primary to-primary/80 p-4">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iYSIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVHJhbnNmb3JtPSJyb3RhdGUoNDUpIj48cGF0aCBkPSJNLTEwIDMwaDYwdjJoLTYweiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuMDUiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjYSkiLz48L3N2Zz4=')] opacity-30" />
-
-          {/* Status badges */}
-          <div className="relative mb-2 flex items-center gap-2">
-            {poll.isActive && !isEnded ? (
-              <Badge className="bg-white/20 text-white border-white/30 backdrop-blur-sm">
-                Active
-              </Badge>
-            ) : (
-              <Badge className="bg-black/20 text-white border-white/20 backdrop-blur-sm">
-                {isEnded ? "Ended" : "Inactive"}
-              </Badge>
-            )}
-            {hasVoted && (
-              <Badge className="bg-accent/20 text-white border-white/30 backdrop-blur-sm">
+      <div className="group relative flex flex-col justify-between h-full bg-card rounded-xl border border-border/60 hover:border-border transition-all duration-300 hover:shadow-lg p-5">
+        
+        {/* Top: Status Badges */}
+        <div className="flex items-center justify-between mb-3">
+           <div className="flex gap-2">
+             {poll.isActive && !isEnded ? (
+                <Badge variant="secondary" className="bg-blue-50 text-blue-700 hover:bg-blue-100 border-blue-100">
+                  Active
+                </Badge>
+              ) : (
+                <Badge variant="outline" className="text-muted-foreground border-border">
+                  {isEnded ? "Ended" : "Inactive"}
+                </Badge>
+              )}
+           </div>
+           {hasVoted && (
+              <Badge variant="outline" className="border-green-200 bg-green-50 text-green-700">
                 <CheckCircle2 className="mr-1 h-3 w-3" />
                 Voted
               </Badge>
             )}
-          </div>
-
-          {/* Title on colored background */}
-          <h3 className="relative text-lg font-bold leading-tight text-white line-clamp-2">
-            {poll.title}
-          </h3>
         </div>
 
-        {/* Content section */}
-        <div className="p-4">
-          {/* Description */}
+        {/* Middle: Title & Description */}
+        <div className="mb-4">
+          <h3 className="text-lg font-bold leading-snug text-foreground mb-2 group-hover:text-primary transition-colors font-heading">
+            {poll.title}
+          </h3>
           {poll.description && (
-            <p className="mb-3 line-clamp-2 text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground line-clamp-2">
               {poll.description}
             </p>
           )}
+        </div>
 
-          {/* Footer info */}
-          <div className="flex items-center justify-between text-xs">
-            <div className="flex items-center gap-3">
-              <span className="flex items-center gap-1 text-muted-foreground">
-                <Clock className="h-3.5 w-3.5 text-primary" />
-                <span className="font-medium">{timeRemaining}</span>
-              </span>
-              {showVoteCount && (
-                <span className="flex items-center gap-1 text-muted-foreground">
-                  <Users className="h-3.5 w-3.5 text-secondary" />
-                  <span className="font-medium">{voteCount}</span>
-                </span>
-              )}
-            </div>
-            <ChevronRight className="h-5 w-5 text-muted-foreground/50 transition-all group-hover:translate-x-1 group-hover:text-primary" />
+        {/* Bottom: Meta Info */}
+        <div className="flex items-center justify-between pt-4 border-t border-border/40 mt-auto">
+          <div className="flex items-center gap-4 text-xs font-medium text-muted-foreground">
+             <span className="flex items-center gap-1.5">
+               <Clock className="h-3.5 w-3.5 text-primary/70" />
+               {timeRemaining}
+             </span>
+             {showVoteCount && (
+               <span className="flex items-center gap-1.5">
+                 <Users className="h-3.5 w-3.5 text-primary/70" />
+                 {voteCount} votes
+               </span>
+             )}
           </div>
+          <ChevronRight className="h-4 w-4 text-muted-foreground/30 transition-transform group-hover:translate-x-1 group-hover:text-primary" />
         </div>
       </div>
-
-      {/* Options preview */}
-      {poll.options && poll.options.length > 0 && (
-        <div className="mt-4 flex flex-wrap gap-2">
-          {poll.options.slice(0, 3).map((option) => (
-            <span
-              key={option.id}
-              className="rounded-full bg-secondary/50 px-2.5 py-1 text-xs text-secondary-foreground"
-            >
-              {option.name}
-            </span>
-          ))}
-          {poll.options.length > 3 && (
-            <span className="rounded-full bg-secondary/30 px-2.5 py-1 text-xs text-muted-foreground">
-              +{poll.options.length - 3} more
-            </span>
-          )}
-        </div>
-      )}
     </Link>
   );
 }

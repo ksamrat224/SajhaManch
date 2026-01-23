@@ -39,7 +39,7 @@ export default async function AdminLayout({
                 <Vote className="h-5 w-5 text-primary" />
               </div>
               <span className="text-lg font-bold gradient-text hidden sm:inline-block">
-                VoteSphere
+                SajhaManch
               </span>
             </Link>
             <Badge
@@ -142,7 +142,7 @@ export default async function AdminLayout({
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <div className="flex items-center gap-2 text-muted-foreground">
               <Vote className="h-4 w-4" />
-              <span className="text-sm">VoteSphere Admin Panel</span>
+              <span className="text-sm">SajhaManch Admin Panel</span>
             </div>
             <p className="text-xs text-muted-foreground">
               &copy; {new Date().getFullYear()} All rights reserved.
