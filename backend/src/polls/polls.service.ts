@@ -7,9 +7,9 @@ import {
 import { CreatePollDto } from './dto/create-poll.dto';
 import { UpdatePollDto } from './dto/update-poll.dto';
 import { PrismaService } from '../../prisma/prisma.service';
-import { QueryPollDto } from './dto/query-poll.dto';
-import { fuzzySearch } from 'src/common/utils/fuzzy-search.utils';
 import { Trie } from 'src/common/utils/trie.utils';
+import { Prisma } from 'generated/prisma/wasm';
+import { Query } from 'src/interfaces/query';
 
 @Injectable()
 export class PollsService implements OnModuleInit {
@@ -42,38 +42,39 @@ export class PollsService implements OnModuleInit {
       throw error;
     }
   }
+  async findAll(query: Query) {
+    const { page = 1, limit = 10, sort = 'id', order = 'desc', search } = query;
+    const skip = (+page - 1) * +limit;
+    const take = +limit;
+    const orderBy = { [sort]: order.toLowerCase() === 'asc' ? 'asc' : 'desc' };
 
-  async findAll(queryDto: QueryPollDto) {
-    const {
-      page = 1,
-      limit = 10,
-      search,
-      isActive,
-      sortBy = 'createdAt',
-      order = 'desc',
-    } = queryDto;
-
-    const skip = (page - 1) * limit;
-
-    const where: any = {};
-    if (isActive !== undefined) where.isActive = isActive;
-    if (search) {
-      where.OR = [
-        { title: { contains: search, mode: 'insensitive' } },
-        { description: { contains: search, mode: 'insensitive' } },
-      ];
-    }
+    const where: Prisma.PollWhereInput = search
+      ? {
+          OR: [
+            { title: { contains: search, mode: Prisma.QueryMode.insensitive } },
+            {
+              description: {
+                contains: search,
+                mode: Prisma.QueryMode.insensitive,
+              },
+            },
+          ],
+        }
+      : {};
 
     const [polls, total] = await Promise.all([
       this.prisma.poll.findMany({
-        where,
         skip,
-        take: limit,
-        orderBy: { [sortBy]: order },
-        include: { options: true, _count: { select: { votes: true } } },
+        take,
+        orderBy,
+        where,
       }),
       this.prisma.poll.count({ where }),
     ]);
+
+    const totalPages = Math.ceil(total / take);
+    const hasNext = page < totalPages;
+    const hasPrev = page > 1;
 
     return {
       data: polls,
@@ -81,7 +82,9 @@ export class PollsService implements OnModuleInit {
         total,
         page,
         limit,
-        totalPages: Math.ceil(total / limit),
+        total_pages: totalPages,
+        has_next: hasNext,
+        has_prev: hasPrev,
       },
     };
   }

@@ -16,7 +16,8 @@ import { PollsService } from './polls.service';
 import { CreatePollDto } from './dto/create-poll.dto';
 import { UpdatePollDto } from './dto/update-poll.dto';
 import { Roles } from 'src/helpers/roles';
-import { QueryPollDto } from './dto/query-poll.dto';
+
+import type { Query as QueryInterface } from 'src/interfaces/query';
 
 @Controller('polls')
 export class PollsController {
@@ -29,7 +30,7 @@ export class PollsController {
   @Roles('ADMIN', 'USER')
   @Get()
   @UsePipes(new ValidationPipe({ transform: true }))
-  async findAll(@Query() query: QueryPollDto) {
+  async findAll(@Query() query: QueryInterface) {
     return this.pollsService.findAll(query);
   }
   @Roles('ADMIN', 'USER')

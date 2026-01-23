@@ -1,9 +1,11 @@
-export default interface PaginatedResponse<T> {
+export interface PaginatedResponse<T> {
   data: T[];
   meta: {
-    total: number;
     page: number;
     limit: number;
-    totalPages: number;
+    total: number;
+    total_pages: number;
+    has_next: boolean;
+    has_prev: boolean;
   };
 }
