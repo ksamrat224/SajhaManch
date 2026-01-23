@@ -66,10 +66,10 @@ export function VotingOptions({
 
   if (hasVoted) {
     return (
-      <div className="rounded-xl border border-green-500/30 bg-green-500/10 p-4 text-center">
-        <Check className="mx-auto mb-2 h-8 w-8 text-green-500" />
-        <p className="font-medium text-green-400">You have already voted!</p>
-        <p className="mt-1 text-sm text-muted-foreground">
+      <div className="rounded-2xl border-2 border-accent bg-accent/10 p-6 text-center">
+        <Check className="mx-auto mb-3 h-12 w-12 text-accent" />
+        <p className="text-lg font-bold text-accent">You have already voted!</p>
+        <p className="mt-2 text-sm text-muted-foreground">
           View the results below
         </p>
       </div>
@@ -78,8 +78,8 @@ export function VotingOptions({
 
   if (!isActive) {
     return (
-      <div className="rounded-xl border border-muted bg-muted/30 p-4 text-center">
-        <p className="font-medium text-muted-foreground">
+      <div className="rounded-2xl border-2 border-border bg-muted p-6 text-center">
+        <p className="text-lg font-semibold text-muted-foreground">
           This poll is no longer accepting votes
         </p>
       </div>
@@ -94,34 +94,34 @@ export function VotingOptions({
         </div>
       )}
 
-      <div className="space-y-2">
+      <div className="space-y-3">
         {options.map((option) => (
           <button
             key={option.id}
             onClick={() => setSelectedOption(option.id)}
             disabled={isSubmitting}
             className={cn(
-              "poll-option w-full rounded-xl border p-4 text-left transition-all",
+              "poll-option w-full rounded-xl border-2 p-5 text-left font-semibold text-lg transition-all hover:scale-[1.02]",
               selectedOption === option.id
-                ? "border-primary bg-primary/10 ring-2 ring-primary/30"
-                : "border-border/50 bg-card/50 hover:border-primary/30",
+                ? "border-primary bg-primary text-white shadow-lg shadow-primary/20"
+                : "border-border bg-white hover:border-primary/50 hover:shadow-md",
               isSubmitting && "cursor-not-allowed opacity-50",
             )}
           >
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
               <div
                 className={cn(
-                  "flex h-5 w-5 items-center justify-center rounded-full border-2 transition-colors",
+                  "flex h-6 w-6 items-center justify-center rounded-full border-3 transition-colors",
                   selectedOption === option.id
-                    ? "border-primary bg-primary"
-                    : "border-muted-foreground/50",
+                    ? "border-white bg-white"
+                    : "border-muted-foreground/50 bg-transparent",
                 )}
               >
                 {selectedOption === option.id && (
-                  <Check className="h-3 w-3 text-primary-foreground" />
+                  <Check className="h-4 w-4 text-primary" />
                 )}
               </div>
-              <span className="font-medium">{option.name}</span>
+              <span>{option.name}</span>
             </div>
           </button>
         ))}
@@ -130,16 +130,17 @@ export function VotingOptions({
       <Button
         onClick={handleVote}
         disabled={!selectedOption || isSubmitting}
-        className="vote-btn w-full gap-2 rounded-xl bg-primary py-6 text-lg font-semibold text-primary-foreground hover:bg-primary/90"
+        className="w-full gap-3 rounded-xl bg-primary py-7 text-lg font-bold text-white shadow-lg shadow-primary/30 hover:bg-primary/90 hover:shadow-xl transition-all"
+        size="lg"
       >
         {isSubmitting ? (
           <>
-            <Loader2 className="h-5 w-5 animate-spin" />
+            <Loader2 className="h-6 w-6 animate-spin" />
             Submitting...
           </>
         ) : (
           <>
-            <Vote className="h-5 w-5" />
+            <Vote className="h-6 w-6" />
             {isAuthenticated ? "Cast Your Vote" : "Login to Vote"}
           </>
         )}

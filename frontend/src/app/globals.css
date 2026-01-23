@@ -3,50 +3,50 @@
 
 /* Removed invalid @custom-variant and @theme blocks. All variables are now in :root and .dark. */
 
-/* Janamat-inspired dark theme - teal/navy background with orange accents */
+/* Janamat-inspired vibrant theme - light background with colorful accents */
 :root {
   --radius: 0.75rem;
-  /* Dark teal/navy background */
-  --background: oklch(0.15 0.03 220);
-  --foreground: oklch(0.98 0.01 220);
-  /* Cards with subtle transparency */
-  --card: oklch(0.18 0.025 220);
-  --card-foreground: oklch(0.98 0.01 220);
-  --popover: oklch(0.18 0.025 220);
-  --popover-foreground: oklch(0.98 0.01 220);
-  /* Orange/coral primary - Janamat accent */
-  --primary: oklch(0.7 0.18 45);
-  --primary-foreground: oklch(0.98 0 0);
-  /* Teal secondary */
-  --secondary: oklch(0.25 0.04 220);
-  --secondary-foreground: oklch(0.95 0.01 220);
-  /* Muted teal tones */
-  --muted: oklch(0.22 0.03 220);
-  --muted-foreground: oklch(0.65 0.02 220);
-  /* Accent - purple/violet tones */
-  --accent: oklch(0.55 0.15 280);
-  --accent-foreground: oklch(0.98 0 0);
-  /* Destructive - red */
-  --destructive: oklch(0.6 0.22 25);
-  /* Borders */
-  --border: oklch(0.3 0.03 220);
-  --input: oklch(0.25 0.03 220);
-  --ring: oklch(0.7 0.18 45);
-  /* Chart colors */
-  --chart-1: oklch(0.7 0.18 45);
-  --chart-2: oklch(0.55 0.15 280);
-  --chart-3: oklch(0.65 0.15 160);
-  --chart-4: oklch(0.75 0.15 90);
-  --chart-5: oklch(0.6 0.18 340);
+  /* Light neutral background */
+  --background: oklch(0.98 0.002 220);
+  --foreground: oklch(0.15 0.01 220);
+  /* Cards with white background */
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.15 0.01 220);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.15 0.01 220);
+  /* Bright red primary - Janamat style */
+  --primary: oklch(0.55 0.22 25);
+  --primary-foreground: oklch(1 0 0);
+  /* Blue/teal secondary */
+  --secondary: oklch(0.55 0.15 220);
+  --secondary-foreground: oklch(1 0 0);
+  /* Muted gray tones */
+  --muted: oklch(0.95 0.005 220);
+  --muted-foreground: oklch(0.5 0.01 220);
+  /* Green accent */
+  --accent: oklch(0.55 0.15 145);
+  --accent-foreground: oklch(1 0 0);
+  /* Bright red destructive */
+  --destructive: oklch(0.55 0.22 25);
+  /* Light borders */
+  --border: oklch(0.9 0.005 220);
+  --input: oklch(0.98 0.002 220);
+  --ring: oklch(0.55 0.22 25);
+  /* Vibrant chart colors */
+  --chart-1: oklch(0.55 0.22 25);
+  --chart-2: oklch(0.55 0.15 145);
+  --chart-3: oklch(0.55 0.15 220);
+  --chart-4: oklch(0.65 0.18 45);
+  --chart-5: oklch(0.55 0.15 280);
   /* Sidebar */
-  --sidebar: oklch(0.12 0.03 220);
-  --sidebar-foreground: oklch(0.95 0.01 220);
-  --sidebar-primary: oklch(0.7 0.18 45);
-  --sidebar-primary-foreground: oklch(0.98 0 0);
-  --sidebar-accent: oklch(0.22 0.03 220);
-  --sidebar-accent-foreground: oklch(0.95 0.01 220);
-  --sidebar-border: oklch(0.25 0.03 220);
-  --sidebar-ring: oklch(0.7 0.18 45);
+  --sidebar: oklch(0.98 0.002 220);
+  --sidebar-foreground: oklch(0.15 0.01 220);
+  --sidebar-primary: oklch(0.55 0.22 25);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.95 0.005 220);
+  --sidebar-accent-foreground: oklch(0.15 0.01 220);
+  --sidebar-border: oklch(0.9 0.005 220);
+  --sidebar-ring: oklch(0.55 0.22 25);
 }
 
 .dark {
